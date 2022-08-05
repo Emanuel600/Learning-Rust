@@ -1,10 +1,6 @@
 /* TODO:
  * Add user input => Will be done on another source file (input.rs)
- * Remove all enums (easier on main with just the "Complex" struct)
  */
-
-
-
 
 #![allow(dead_code)]
 
