@@ -1,7 +1,6 @@
 use std::io;
 /* TODO:
- * Fix parenthesis (it tries to use '(' as an operator, causing the program to panic and crash)
- * Test if the order of operations is always respected
+ * Implement nested parenthesis => Panics when trying to operate "a)b", and does not follow order of operations
  * Implement non-integers as input
  * Remove unnecessary "println!"s
  * Implement negative numbers (for divisions, mostly)
@@ -32,7 +31,19 @@ pub fn string_eval(func: String) -> f64 {
 			continue;
 		}
 		else if c[i] == '(' {
-			operat.push(c[i]);
+
+			let mut exp = String::new();
+
+			while c[i] != ')' {
+				i+=1;
+
+				exp.push(c[i]);
+
+				if i > func.len()-1 {
+					panic!("Closing parenthesis not found");
+				}
+			}
+			values.push(string_eval(exp)); // Recursive works better
 		}
 		else if (c[i]).is_digit(10){
 			let mut val = 0.0;
@@ -43,10 +54,9 @@ pub fn string_eval(func: String) -> f64 {
 			}
 			i -= 1;
 			values.push(val);
-			println!("Value pushed: {}", values.last().unwrap());
 		}
-
-		else if c[i] == ')'{
+/*
+		else if c[i] == ')'{ // If I can get this to work it would solve the nested issue 
 			println!("{} found in {i}", c[i]);
 			while !operat.is_empty() && *(operat.last().unwrap()) ==  '('{
 				println!("Loop for '(' entered");
@@ -67,28 +77,21 @@ pub fn string_eval(func: String) -> f64 {
 				operat.pop();
 			}
 		}
-
+*/
 		else {
-			println!("else called on {}, {i}", c[i]);
-			println!("Current last element on operat: {}", operat.last().unwrap_or(&'e'));
 			while !(operat.is_empty()) && (precedence( *(operat.last().unwrap_or(&' ') ))
 					>= precedence(c[i])){
-				println!("While loop entered on {i} iter");
 				let num2 = values.pop().unwrap();
 
 				let num1 = values.pop().unwrap();
 
 				let op   = operat.pop().unwrap();
 
-				if op != '('{
-					values.push(operate(num1, num2, op));
-					println!("Result of operation {num1}{op}{num2}: {}", values.last().unwrap());
-				}
+				values.push(operate(num1, num2, op));
 			}
 
 			operat.push(c[i]);
 
-			println!("Current last element on operat: {}", operat.last().unwrap_or(&'e'));
 		}
 		i+=1;
 	}
@@ -100,16 +103,13 @@ pub fn string_eval(func: String) -> f64 {
 
 		let op   = operat.pop().unwrap_or(' ');
 
-		if op != '('{
-			values.push(operate(num1, num2, op));
-		}
+		values.push(operate(num1, num2, op));
 	}
 
 	return *(values.last().unwrap_or(&0.0));
 }
 
 pub fn precedence(op: char) -> u8 {
-	println!("precedence called for {op}");
 	if op=='+'||op=='-'{
 		return 1;
 	}
@@ -120,7 +120,6 @@ pub fn precedence(op: char) -> u8 {
 }
 
 pub fn operate(a: f64, b: f64, op: char) -> f64{
-	println!("fn operate called for {a}{op}{b}");
 	match op {
 		'+' => return a+b,
 		'-' => return a-b,
