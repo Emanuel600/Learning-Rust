@@ -1,4 +1,5 @@
 # Learning-Rust
 Learning Rust Because I Have Free Time
 
-[WIP] => Will be updated when I make enough things in here
+
+Comp_Calc => CLI complex calculator, that allows for user inputed variables and function |shelved|
