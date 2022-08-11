@@ -1,0 +1,8 @@
+	It was probably not a good idea to start with a project this complicated on a language I'm not
+  not familiar with. Regardless, this was a pretty fun project, I believe it would've been better if
+  I had first made a cli calculator and moved on from there, slowly implementing features instead of
+  starting with complex numbers and attempting to add a calculator on top.
+  
+	I am aware that Rust offers a default crate for complex numbers that is - as far as I can tell -
+  complete, I did not use it because I figured I would learn more if I implemented everything by hand,
+  and I do believe I was right on that.
