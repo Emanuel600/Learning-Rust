@@ -1,1 +1,3 @@
-  Observations will go here
+    Adding a variable to a function was significantly harder than expected, at least in a way that was resource
+  and time eficient. I did think of adding structs for functions to implement it in an easier way, or making 'x'
+  an operator, but these also proved challenging. Either implementation is going to take time I currently don't have.
