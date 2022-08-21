@@ -1,11 +1,11 @@
 use std::io;
 
-trait Operate{
-	fn operate(&self, op: char, num: f64) -> f64;
-}
+enum Variable {}
+
+trait Operate{fn operate(&self, op: char, num: f64) -> f64;}
 
 impl Operate for f64 {
-	fn operate(&self, op: char, num: f64) -> f64{
+	fn operate(&self, op: char, num: f64) -> f64 {
 		println!("Called for {self}{op}{num}");
 
 		match op {
@@ -16,12 +16,6 @@ impl Operate for f64 {
 			'^' => self.powf(num),
 			 _  => panic!("Operator '{op}' is not implemented"),
 		}
-	}
-}
-
-impl Operate for Vec<f64> {
-	fn operate(&self, op: char, num: f64) -> f64{ // This either needs its own trait or a rewrite of the function
-		panic!("not yet implemented for Vec<f64>");
 	}
 }
 
@@ -44,20 +38,6 @@ pub fn precedence(op: char) -> u8{
 	return 0;
 }
 
-/* deprecated
-pub fn operate(a:f64, b:f64, op: char) -> f64{
-	println!("Called for {a}{op}{b}");
-
-	match op {
-		'+' => a+b,
-		'-' => a-b,
-		'*' => a*b,
-		'/' => a/b,
-		'^' => a.powf(b),
-		 _  => panic!("Operator '{op}' is not implemented"),
-	}
-}
-*/
 pub fn str_eval(func: String) -> f64{ // Maybe add a conpressor function that slowly reduces the string
 	let chars: Vec<char> = func.chars().collect();
 
