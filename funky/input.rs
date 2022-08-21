@@ -64,31 +64,28 @@ pub fn str_eval(func: String) -> f64{ // Maybe add a conpressor function that sl
 
 		else if chars[i] == ')' { i+=1 ; continue; }
 
-		else if chars[i].is_digit(10) {
-			let mut val = 0.0;
+		else if chars[i].is_digit(10) { // turn into string and see if it works
+			let mut value = String::new();
 
 			while (i < size-1) & (chars[i].is_digit(10)) { // Get integer part of a number
-				val= (val*10.0) + (chars[i].to_digit(10).unwrap() as f64);
+				value.push(chars[i]);
 				i += 1;
 			}
 
 			if (chars[i] == '.') | (chars[i] == ',') {
-				let mut cases = -1;	// Number of decimal cases
-				let mut decimal = 0.0;	// Value after decimal point
+				value.push(chars[i]);
 
 				i += 1;
 
 				while (i < size-1) & (chars[i].is_digit(10)) { // Get decimal part of a number
-					decimal= decimal + (chars[i].to_digit(10).unwrap() as f64)*((10_f64).powi(cases));
-					cases -= 1;
+					value.push(chars[i]);
 					i += 1;
 				}
 
-				val = val + decimal;
 			}
 			i -= 1;
 
-			values.push(val);
+			values.push(value.parse::<f64>().unwrap());
 		}
 
 		else {
