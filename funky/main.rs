@@ -1,7 +1,6 @@
 mod input;
+mod shunting;
 
 fn main() {
-	let result = input::call_solver();
-
-	println!("Result= {result}");
+	shunting::measure_time();
 }
